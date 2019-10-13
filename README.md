@@ -4,8 +4,7 @@ Framework
  - GraphQL: [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go)
  - Dataloader: [dataloader](https://github.com/graph-gophers/dataloader)
 
-Benchmark Results
-Execute resolvers per request in parallel by 50 goroutines
+Execute resolvers per request in parallel by 50 goroutines, here is benchmark result
 
 ```
 go test -bench=. -benchmem -benchtime=30s
