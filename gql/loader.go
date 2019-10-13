@@ -22,7 +22,7 @@ var (
 )
 
 func Analyze() {
-	fmt.Println(fmt.Sprintf("Connect count: %d, timeNano: %d, ave time: %f",
+	fmt.Println(fmt.Sprintf("Query count: %d, Cost time: %d, Ave time: %f",
 		connectCount,
 		connectTimeNano,
 		float64(connectTimeNano)/float64(connectCount),
