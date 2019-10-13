@@ -9,8 +9,8 @@ import (
 )
 
 const (
-	url  = "media17:media17@tcp(35.221.134.116:3306)" // <account>:<password>@tcp(<ip>:<port>)
-	name = "media17"
+	url  = "" // <account>:<password>@tcp(<ip>:<port>)
+	name = ""
 )
 
 var db *sqlx.DB
@@ -64,7 +64,7 @@ func CreateTestData() {
 	paramStr = []string{}
 	paramValues = []interface{}{}
 	for i := 0; i < userCount; i++ {
-		for j := 0; j < 20; j++ {
+		for j := 0; j < 1; j++ {
 			paramStr = append(paramStr, "(?,?)")
 			paramValues = append(paramValues, i, fmt.Sprintf("text-%d-%d", i, j))
 		}
