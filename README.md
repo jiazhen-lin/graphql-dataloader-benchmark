@@ -1,8 +1,8 @@
 # graphql-dataloader-benchmark
 
 Framework
- - GraphQL: [graph-gophers/graphql-go](!https://github.com/graph-gophers/graphql-go)
- - Dataloader: [dataloader](!https://github.com/graph-gophers/dataloader)
+ - GraphQL: [graph-gophers/graphql-go](https://github.com/graph-gophers/graphql-go)
+ - Dataloader: [dataloader](https://github.com/graph-gophers/dataloader)
 
 Benchmark Results
 
