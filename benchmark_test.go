@@ -2,20 +2,20 @@ package main
 
 import (
 	"context"
-	gql "test-data-loader/gql"
 	"testing"
 
 	graphql "github.com/graph-gophers/graphql-go"
+	gql "github.com/jiazhen-lin/graphql-dataloader-benchmark/gql"
 )
 
-func BenchmarkTestWithLoader(b *testing.B) {
+func BenchmarkTestWithoutLoader(b *testing.B) {
 	gql.CreateTestData()
 	b.ResetTimer()
 
 	s := graphql.MustParseSchema(gql.Schema, &gql.Resolver{}, graphql.MaxParallelism(50))
 	for i := 0; i < b.N; i++ {
 		ctx := context.Background()
-		ctx = gql.Attach(ctx, true)
+		ctx = gql.Attach(ctx, false)
 		s.Exec(ctx, `query(){
 			users{
 				name
@@ -27,14 +27,14 @@ func BenchmarkTestWithLoader(b *testing.B) {
 	}
 }
 
-func BenchmarkTestWithoutLoader(b *testing.B) {
+func BenchmarkTestWithLoader(b *testing.B) {
 	gql.CreateTestData()
 	b.ResetTimer()
 
 	s := graphql.MustParseSchema(gql.Schema, &gql.Resolver{}, graphql.MaxParallelism(50))
 	for i := 0; i < b.N; i++ {
 		ctx := context.Background()
-		ctx = gql.Attach(ctx, false)
+		ctx = gql.Attach(ctx, true)
 		s.Exec(ctx, `query(){
 			users{
 				name

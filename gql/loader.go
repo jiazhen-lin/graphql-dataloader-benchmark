@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strconv"
+	"time"
 
 	"github.com/graph-gophers/dataloader"
 	"github.com/jmoiron/sqlx"
@@ -14,6 +15,19 @@ type loaderKey string
 const (
 	postLoaderKey loaderKey = "post"
 )
+
+var (
+	connectCount    int
+	connectTimeNano int64
+)
+
+func Analyze() {
+	fmt.Println(fmt.Sprintf("Connect count: %d, timeNano: %d, ave time: %f",
+		connectCount,
+		connectTimeNano,
+		float64(connectTimeNano)/float64(connectCount),
+	))
+}
 
 func Attach(ctx context.Context, loaderEnable bool) context.Context {
 	ctx = context.WithValue(ctx, "loaderEnable", loaderEnable)
@@ -99,6 +113,7 @@ func getPostByUser(userID int) ([]*Post, error) {
 }
 
 func getPostByUsers(userIDs ...int) ([]*Post, error) {
+	startTime := time.Now()
 	var ps []*Post
 	q, args, err := sqlx.In("SELECT userID, text FROM TestPost WHERE userID IN (?)", userIDs)
 	if err != nil {
@@ -108,5 +123,9 @@ func getPostByUsers(userIDs ...int) ([]*Post, error) {
 		fmt.Println("err: ", err)
 		return nil, err
 	}
+
+	connectCount++
+	endTime := time.Now()
+	connectTimeNano += (endTime.UnixNano() - startTime.UnixNano())
 	return ps, nil
 }
